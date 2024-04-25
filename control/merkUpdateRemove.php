@@ -1,6 +1,7 @@
 <?php 
 
 include('merkclass.php');
+$config = parse_ini_file(__DIR__ . "\config.ini", true);
 $merkObject = new MerkClass;
 $id = $_POST["id"];
 $Name = $_POST["UpdateName"];
@@ -15,24 +16,36 @@ if(!isset($_POST["DataUpdate"]) && !isset($_POST["Remove"])){
                 $newStatus = "erledigt";
 
         
-        $merkObject->checkboxUpdate("localhost","root","","merkdata",$id,$newStatus);
+        $merkObject->checkboxUpdate($config["database"]["hostname"]
+        ,$config["database"]["username"]
+        ,$config["database"]["password"]
+        ,$config["database"]["database"],$id,$newStatus);
         
         header('location:../');
         
         }else{
                 $newStatus = "nicht erledigt";
         
-        $merkObject->checkboxUpdate("localhost","root","","merkdata",$id,$newStatus);
+        $merkObject->checkboxUpdate($config["database"]["hostname"]
+        ,$config["database"]["username"]
+        ,$config["database"]["password"]
+        ,$config["database"]["database"],$id,$newStatus);
         
         header('location:../');
         }
 
 }elseif(isset($_POST["DataUpdate"])){
-                $merkObject->update("localhost","root","","merkdata",$id,$Name,$Beschreibung,$Datum,$Uhrzeit);
+                $merkObject->update($config["database"]["hostname"]
+                ,$config["database"]["username"]
+                ,$config["database"]["password"]
+                ,$config["database"]["database"],$id,$Name,$Beschreibung,$Datum,$Uhrzeit);
                 header('location:../'); 
 
 }elseif(isset($_POST["Remove"])){
-                $merkObject->remove("localhost","root","","merkdata",$id);
+                $merkObject->remove($config["database"]["hostname"]
+                ,$config["database"]["username"]
+                ,$config["database"]["password"]
+                ,$config["database"]["database"],$id);
                 header('location:../');
  
 }

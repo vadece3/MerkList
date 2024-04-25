@@ -5,10 +5,14 @@
        $Uhrzeit = $_POST["Uhrzeit"];
        $Status = "nicht erledigt";
        
-       
+        $config = parse_ini_file(__DIR__ . "\config.ini", true);
+        
         include('merkclass.php');
         $get_data = new MerkClass;
-        $get_data->create("localhost","root","","merkdata",$Name,$Beschreibung,$Datum,$Uhrzeit,$Status); 
+        $get_data->create($config["database"]["hostname"]
+        ,$config["database"]["username"]
+        ,$config["database"]["password"]
+        ,$config["database"]["database"],$Name,$Beschreibung,$Datum,$Uhrzeit,$Status); 
 
         header('location:../');
 
